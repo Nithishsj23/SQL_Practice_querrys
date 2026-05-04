@@ -1,9 +1,6 @@
 SELECT 
-
     orderid,
    productid,
     sales,
-
      ROW_NUMBER() over(partition by productid order by sales DESC) as rankbyproducts
-
     FROM orders;
