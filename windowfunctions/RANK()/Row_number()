@@ -1,0 +1,7 @@
+SELECT 
+    orderdate,
+    orderid,
+   productid,
+    sales,
+     ROW_NUMBER() over (order by sales DESC) as salesbyrank_row
+    FROM orders;
