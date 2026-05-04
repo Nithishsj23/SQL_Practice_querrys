@@ -1,0 +1,7 @@
+SELECT 
+    orderdate,
+    orderid,
+   productid,
+    sales,
+     ROW_NUMBER() over (partition by productid order by sales ASC) as salesbyrank
+FROM orders;
