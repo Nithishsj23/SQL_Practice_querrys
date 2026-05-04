@@ -1,0 +1,11 @@
+select *
+from 
+(
+select
+customerid,
+sum(sales) as totalsales,
+row_number() over (order by customerid ASC) as rank_customrs
+from orders
+group by customerid
+)t 
+where rank_customrs <=2
