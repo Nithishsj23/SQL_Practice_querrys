@@ -1,0 +1,6 @@
+select
+*,
+
+row_number() over(partition by orderid order by productid DESC) as ranks
+
+ from orders
