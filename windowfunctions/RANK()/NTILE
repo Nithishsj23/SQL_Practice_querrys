@@ -1,0 +1,10 @@
+select 
+orderid,
+sales,
+
+ntile(4)over(order by sales desc) as four,
+ntile(3)over(order by sales desc) as three,
+ntile(2)over(order by sales desc) as  two,
+ntile(1)over(order by sales desc) as one
+
+from orders
