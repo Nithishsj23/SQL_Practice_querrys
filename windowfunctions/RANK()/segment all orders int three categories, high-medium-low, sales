@@ -1,0 +1,16 @@
+select 
+*,
+case when buckets = 1 then 'high' 
+     when buckets = 2 then 'medium'
+     when buckets = 3 then 'low'
+end as salessegmentation
+
+from(
+
+select 
+orderid,
+sales,
+ntile(3)over(order by sales desc) as buckets
+from orders
+
+)t;
