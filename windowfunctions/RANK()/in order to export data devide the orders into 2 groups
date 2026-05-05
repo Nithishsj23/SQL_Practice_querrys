@@ -1,0 +1,6 @@
+select
+*,
+
+Ntile(2)over(order by sales) as rn
+
+from orders
