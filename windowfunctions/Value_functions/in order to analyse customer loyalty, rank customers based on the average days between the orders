@@ -1,0 +1,13 @@
+select
+
+orderid,
+customerid,
+orderdate as currentorder,
+
+lead(orderdate) over (partition by customerid order by orderdate) as nextorder,
+
+Datediff(day, orderdate, lead(orderdate) over (partition by customerid order by orderdate)) as daystonextorder
+
+from orders
+
+order by customerid, orderdate 
