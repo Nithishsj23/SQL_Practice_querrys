@@ -1,22 +1,49 @@
+--[OPTION 1]
 
 select
-
 *,
-
 currentmonthsales - previousmonthsales as MOM_change,
 round(cast((currentmonthsales - previousmonthsales) as float)/previousmonthsales * 100,1) as MOm_percent
-
 from 
-
 (
 select
-
 month(orderdate) as ordermonth,
 sum(sales) as currentmonthsales,
 lag(sum(sales)) over (order by month(orderdate)) as previousmonthsales
-
 from orders
-
 group by 
        month(orderdate)
 )t
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+--[OPTION 2]
+
+WITH monthly_sales AS (
+    SELECT
+        DATETRUNC(month, orderdate) AS order_month,
+        SUM(sales) AS currentmonthsales
+    FROM orders
+    GROUP BY DATETRUNC(month, orderdate)
+)
+
+SELECT
+    *,
+    currentmonthsales - previousmonthsales AS mom_change,
+
+    ROUND(
+        CAST(currentmonthsales - previousmonthsales AS FLOAT)
+        / NULLIF(previousmonthsales, 0) * 100,
+        1
+    ) AS mom_percent
+
+FROM (
+    SELECT
+        order_month,
+        currentmonthsales,
+
+        LAG(currentmonthsales)
+        OVER (ORDER BY order_month) AS previousmonthsales
+
+    FROM monthly_sales
+) t;
