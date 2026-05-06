@@ -1,0 +1,22 @@
+
+select
+
+*,
+
+currentmonthsales - previousmonthsales as MOM_change,
+round(cast((currentmonthsales - previousmonthsales) as float)/previousmonthsales * 100,1) as MOm_percent
+
+from 
+
+(
+select
+
+month(orderdate) as ordermonth,
+sum(sales) as currentmonthsales,
+lag(sum(sales)) over (order by month(orderdate)) as previousmonthsales
+
+from orders
+
+group by 
+       month(orderdate)
+)t
