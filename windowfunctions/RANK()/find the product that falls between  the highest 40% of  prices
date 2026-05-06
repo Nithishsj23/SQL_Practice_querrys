@@ -1,0 +1,23 @@
+select 
+*,
+concat(distrank * 100, '%') distrank
+from(
+select
+product,
+price,
+cume_dist()over(order by price desc) as distrank
+from products
+)t where distrank <=0.4
+
+---------------------------------------------------------------------------------------
+
+select 
+*,
+concat(distrank * 100, '%') distrank
+from(
+select
+product,
+price,
+percent_rank()over(order by price desc) as distrank
+from products
+)t where distrank <=0.4
