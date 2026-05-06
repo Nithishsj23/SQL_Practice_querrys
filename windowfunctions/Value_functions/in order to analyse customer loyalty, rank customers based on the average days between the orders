@@ -1,13 +1,24 @@
 select
 
-orderid,
+customerid,
+
+avg(daystonextorder) as avg_days,
+rank()over(order by avg(daystonextorder)) as rankavg
+
+from
+
+(
+
+select
+
 customerid,
 orderdate as currentorder,
 
 lead(orderdate) over (partition by customerid order by orderdate) as nextorder,
-
-Datediff(day, orderdate, lead(orderdate) over (partition by customerid order by orderdate)) as daystonextorder
+datediff(day, orderdate, lead(orderdate) over (partition by customerid order by orderdate)) as daystonextorder
 
 from orders
 
-order by customerid, orderdate 
+)t
+
+group by customerid
