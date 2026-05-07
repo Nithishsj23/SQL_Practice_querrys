@@ -1,0 +1,19 @@
+--- Find the highest and lowest sales for each product---
+
+select
+orderid,
+productid,
+sales,
+first_value(sales)over(partition by productid order by sales) as lowestsales,
+last_value(sales)over(partition by productid order by sales rows between current row and unbounded following) as highestsales
+from orders
+
+-------------------------------------------------------------------------------------------------------
+
+SELECT
+    orderid,
+    productid,
+    sales,
+    MIN(sales) OVER(PARTITION BY productid) AS lowestsales,
+    MAX(sales) OVER(PARTITION BY productid) AS highestsales
+FROM orders;
