@@ -5,7 +5,7 @@ orderid,
 productid,
 sales,
 first_value(sales)over(partition by productid order by sales) as lowestsales,
-last_value(sales)over(partition by productid order by sales rows between current row and unbounded following) as highestsales
+first_value(sales)over(partition by productid order by sales desc) as highestsales
 from orders
 
 -------------------------------------------------------------------------------------------------------
