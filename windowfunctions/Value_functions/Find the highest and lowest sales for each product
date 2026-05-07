@@ -1,11 +1,13 @@
 --- Find the highest and lowest sales for each product---
+-----find the difference between current and lowest sales--
 
 select
 orderid,
 productid,
 sales,
 first_value(sales)over(partition by productid order by sales) as lowestsales,
-first_value(sales)over(partition by productid order by sales desc) as highestsales
+first_value(sales)over(partition by productid order by sales desc) as highestsales,
+sales - first_value(sales)over(partition by productid order by sales) as salesdiff
 from orders
 
 -------------------------------------------------------------------------------------------------------
