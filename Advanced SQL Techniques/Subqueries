@@ -1,1 +1,14 @@
-1
+------ find the produts that have a price higher than the avg price of all products -----
+
+
+select
+*
+from
+(
+select
+productid,
+price,
+avg(price)over() as avgprice
+from products
+)t
+where price > avgprice
