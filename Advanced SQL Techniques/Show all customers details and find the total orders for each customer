@@ -1,0 +1,20 @@
+----- Show all customers details and find the total number of orders for each customer-----------
+
+
+select *
+from customers as c
+
+left join 
+(
+
+select 
+customerid,
+count(*) as total_orders
+from orders
+group by customerid
+
+) as o
+
+on c.id = o.customerid
+
+where customerid is not null
