@@ -1,0 +1,10 @@
+select 
+
+productid,
+product,
+price,
+
+(select count(*) orders 
+from orders) as total_orders
+
+from products
