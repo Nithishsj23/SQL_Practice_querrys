@@ -1,0 +1,16 @@
+-- Show all customer details and total quantity purchased by each customer---
+
+select 
+c.*,
+o.total_quantity
+
+from customers as c
+left join
+
+(select 
+customerid,
+sum(quantity) as total_quantity
+from orders
+group by customerid) as o
+
+on c.id = o.customerid
