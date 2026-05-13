@@ -1,0 +1,20 @@
+--- Show all products and total number of orders for each product --- 
+
+select 
+p.*,
+o.number_oforders
+
+from products as p
+
+left join
+
+(select 
+productid,
+count(distinct orderid) as number_oforders
+ from orders
+ group by productid) as o
+
+ on p.productid = o.productid
+
+
+ 
