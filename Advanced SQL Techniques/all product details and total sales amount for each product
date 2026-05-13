@@ -1,0 +1,16 @@
+--Show all product details and total sales amount for each product---
+
+select 
+p.*,
+o.total_salesAmount
+
+from products as p
+left join 
+(
+select
+productid,
+sum(sales) as total_salesAmount
+from orders 
+group by productid) as o
+
+on p.productid = o.productid
