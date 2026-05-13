@@ -1,0 +1,13 @@
+-- all details of customers and total orders for each customer ---
+
+select 
+c.*,
+o.total_orders
+from customers as c
+left join (
+select
+customerid,
+count(*) as total_orders
+from orders
+group by customerid) as o
+on c.id = o.customerid
