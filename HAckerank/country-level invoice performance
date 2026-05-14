@@ -1,0 +1,20 @@
+----------/*Analyze country-level invoice performance by showing:
+country name
+total number of invoices
+average invoice amount
+Return only those countries whose average invoice amount is higher than the overall average invoice amount across all invoices.*/------------
+
+
+SELECT 
+    co.country_name, 
+    COUNT(i.id) AS total_invoices, 
+    ROUND(AVG(i.total_price), 6) AS average_amount
+
+FROM country co
+JOIN city ci ON co.id = ci.country_id
+JOIN customer cu ON ci.id = cu.city_id
+JOIN invoice i ON cu.id = i.customer_id
+
+GROUP BY co.country_name
+
+HAVING AVG(i.total_price) > (SELECT AVG(total_price) FROM invoice);
