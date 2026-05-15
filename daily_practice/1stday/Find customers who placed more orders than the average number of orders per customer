@@ -1,0 +1,15 @@
+-----Find customers who placed more orders than the average number of orders per customer.--
+
+
+select
+* 
+from 
+(
+select 
+customerid,
+count(orderid) as numberoforders,
+avg(count(orderid)) over() as avgnumberpercust
+from orders
+group by customerid
+)t
+where numberoforders > avgnumberpercust
