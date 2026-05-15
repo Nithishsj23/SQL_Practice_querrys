@@ -1,0 +1,18 @@
+---Find customers whose total sales are higher than the average sales of all customers.---
+
+select 
+* 
+from 
+
+( select 
+customerid,
+
+sum(sales) as total_sales,
+avg(sum(sales)) over () as avg_sales
+
+from orders
+group by customerid)t
+
+where total_sales > avg_sales
+
+
