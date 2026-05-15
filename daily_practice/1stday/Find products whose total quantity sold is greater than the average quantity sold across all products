@@ -1,0 +1,15 @@
+---- Find products whose total quantity sold is greater than the average quantity sold across all products.---
+
+select 
+*
+from
+(
+select 
+productid,
+sum(quantity) as totalquantity,
+avg(sum(quantity)) over () as avgquantity
+from orders
+group by productid
+)t
+
+where totalquantity > avgquantity
