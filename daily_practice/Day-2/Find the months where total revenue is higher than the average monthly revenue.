@@ -1,0 +1,15 @@
+--Find the months where total revenue is higher than the average monthly revenue.--
+
+select
+*
+from
+(
+select 
+datepart(month, orderdate) as monthday,
+sum(sales) as totalsales,
+avg(sum(sales)) over() as avgsales
+from orders
+group by datepart(month, orderdate)
+)t
+where totalsales > avgsales
+
