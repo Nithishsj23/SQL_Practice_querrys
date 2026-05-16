@@ -1,0 +1,15 @@
+----Find the customers whose total order amount is greater 
+---than the average total order amount of all customers.---
+
+select
+*
+from
+(
+select 
+customerid,
+sum(sales) as totalsales,
+avg(sum(sales)) over() as avgsales
+from orders
+group by customerid
+)t
+where totalsales > avgsales
