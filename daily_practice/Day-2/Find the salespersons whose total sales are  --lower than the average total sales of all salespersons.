@@ -1,0 +1,15 @@
+--Find the salespersons whose total sales are 
+--lower than the average total sales of all salespersons.--
+
+select 
+*
+from
+(
+select 
+salespersonid,
+sum(sales) as totalsales,
+avg(sum(sales)) over() as avgsales
+from orders
+group by salespersonid
+)t
+where totalsales < avgsales 
