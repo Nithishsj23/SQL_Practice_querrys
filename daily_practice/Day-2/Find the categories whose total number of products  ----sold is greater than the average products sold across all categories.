@@ -1,0 +1,25 @@
+----Find the categories whose total number of products 
+----sold is greater than the average products sold across all categories.---
+
+
+select 
+*
+from
+
+(
+select 
+category,
+
+count(category) as totalnoproducts,
+avg(count(category)) over () as avgproductsold
+
+from orders as o
+
+left join products as p
+on o.productid = p.productid
+
+group by category
+)t
+
+where totalnoproducts > avgproductsold
+
