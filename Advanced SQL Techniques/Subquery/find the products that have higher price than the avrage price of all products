@@ -1,0 +1,8 @@
+--find the products that have higher price than the avrage price of all products
+
+select 
+*
+from products
+where price > (select 
+               avg(price) 
+                   from products)
